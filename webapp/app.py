@@ -3,6 +3,8 @@ from flask import Flask, jsonify, request, redirect, url_for, send_from_director
 from sklearn import datasets, svm
 from werkzeug.utils import secure_filename
 
+from image_processing.image_parser import get_bounding_boxes
+
 UPLOAD_FOLDER = "tmp"
 ALLOWED_EXTENSIONS = set(['png','jpg','jpeg','gif'])
 
@@ -48,8 +50,14 @@ def upload_image():
         # If file exists and is of allowed type
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
+
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return redirect(url_for('uploaded_file',filename=filename))
+
+            bounding_boxes = get_bounding_boxes(filename,"tmp")
+            return jsonify(bounding_boxes)
+
+            #return redirect(url_for('uploaded_file',filename=filename))
+
 
     return '''
     <!doctype html>
