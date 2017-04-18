@@ -10,6 +10,6 @@ RUN pip install -qr /tmp/requirements.txt
 ADD ./webapp /opt/webapp/
 WORKDIR /opt/webapp
 
-RUN conda install scikit-learn
+RUN conda install opencv=3.1.0 --yes
 
 CMD gunicorn --bind 0.0.0.0:$PORT wsgi
