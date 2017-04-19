@@ -1,0 +1,3 @@
+name: flask-opencv-ml
+service: parse-math-image
+command: python app.py
