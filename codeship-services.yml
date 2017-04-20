@@ -1,5 +1,0 @@
-parse-math-image:
-    build:
-        image: docker-heroku
-        dockerfile: dockerfile
-        
