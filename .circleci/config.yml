@@ -4,4 +4,5 @@ jobs:
         working_directory: /opt/webapp
         docker:
             - image: heroku/miniconda
+        steps:    
             - run: echo "hello world"
