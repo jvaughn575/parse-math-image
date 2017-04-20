@@ -1,1 +1,7 @@
 version: 2
+jobs:
+    build:
+        working_directory: /opt/webapp
+        docker:
+            - image: heroku/miniconda
+            - run: echo "hello world"
