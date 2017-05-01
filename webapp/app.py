@@ -3,7 +3,7 @@ from flask import Flask, jsonify, request, redirect, url_for, send_from_director
 from sklearn import datasets, svm
 from werkzeug.utils import secure_filename
 
-from image_processing.image_parser import get_bounding_boxes
+from image_processing.image_parser import get_bounding_boxes, generate_problems
 
 UPLOAD_FOLDER = "tmp"
 ALLOWED_EXTENSIONS = set(['png','jpg','jpeg','gif'])
@@ -54,8 +54,19 @@ def upload_image():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
             bounding_boxes = get_bounding_boxes(filename,"tmp")
-            return jsonify(bounding_boxes)
+            problems = generate_problems(bounding_boxes,filename,"tmp")
 
+            html = "<ul>"
+
+            for problem in problems:
+                html += "<li>" + problem.get_question() + " = " + problem.get_response() + "</li>"
+
+            #html += "<li>" + problems[0].get_question() + " = " + problem.get_response() + "</li>"
+
+            html += "</ul>"
+            return html
+
+            #return jsonify(bounding_boxes)
             #return redirect(url_for('uploaded_file',filename=filename))
 
 
